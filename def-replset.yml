@@ -1,0 +1,24 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: tomcat-rs
+  labels:
+    type: appserver
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      type: appserver
+  template:
+    metadata:
+      name: tomcat-appserver
+      labels:
+        type: appserver
+    spec:
+      containers:
+        - name: tomcat-app
+          image: tomcat
+          ports:
+            - containerPort: 8080
+              hostPort: 1122

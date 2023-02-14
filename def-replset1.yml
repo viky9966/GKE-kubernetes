@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: ghost
+  labels:
+    type: content-writing
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      type: content-writing
+  template:
+    metadata:
+      name: ghost
+      labels:
+        type: content-writing
+    spec:
+      containers:
+        - name: ghost
+          image: ghost
+          ports:
+            - containerPort: 2368
+              hostPort: 9090
+          env:
+            - name: NODE_ENV
+              value: development
