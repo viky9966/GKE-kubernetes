@@ -1,0 +1,13 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-db
+  labels:
+    type: redis-service
+spec:
+  ports:
+    - targetPort: 6380
+      port: 6380
+  selector:
+    type: redis-db

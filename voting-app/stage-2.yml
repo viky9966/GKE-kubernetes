@@ -1,0 +1,21 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stage-2
+  labels:
+    type: redis-db
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      type: redis-db
+  template:
+    metadata:
+      name: redis-db-app
+      labels:
+        type: redis-db
+    spec:
+      containers:
+        - name: redis-db-app
+          image: redis

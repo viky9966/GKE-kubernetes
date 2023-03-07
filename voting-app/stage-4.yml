@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stage4-postgres-db
+  labels:
+    type: postgres-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      type: postgres-db
+  template:
+    metadata:
+      name: postgres
+      labels:
+        type: postgres-db
+    spec:
+      containers:
+        - name: postgres-db
+          image: postgres
+          env:
+            - name: POSTGRES_PASSWORD
+              value: 12345
+              name: POSTGRES_USER
+              value: myuser
+              name: POSTGRES_DB
+              value: mydb
