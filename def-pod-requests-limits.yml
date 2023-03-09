@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+  labels:
+    type: proxy
+spec:
+      containers:
+        - name: mynginx
+          image: nginx
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: "100Mi"
+              cpu: "200m"
+            limits:
+              memory: "300Mi"
+              cpu: "600m"

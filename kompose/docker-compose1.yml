@@ -1,0 +1,33 @@
+---
+version: '3'
+services:
+  stage1-votingapp:
+    image: dockersamples/examplevotingapp_vote
+    ports:
+      - 5050:80
+    deploy:
+      replicas: 2
+
+  stage2-redis-tempdb:
+    image: redis
+    ports:
+      - 6380:6380
+
+  stage3-workerapp:
+    image: dockersamples/examplevotingapp_worker
+
+  stage4-postgres-db:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_USER: myuser
+      POSTGRES_DB: mydb
+
+  stage5-resultapp:
+    image: dockersamples/examplevotingapp_result
+    ports:
+      - 6060:80
+    deploy:
+      replicas: 2

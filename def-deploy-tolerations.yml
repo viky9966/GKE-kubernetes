@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myhttpd
+  labels:
+    type: webserver
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      type: webserver
+  template:
+    metadata:
+      name: myhttpd
+      labels:
+        type: webserver
+    spec:
+      containers:
+        - name: myhttpd
+          image: httpd
+          ports:
+            - containerPort: 80
+      tolerations:
+        - key: run
+          operator: Equal
+          value: viky
+          effect: NoSchedule

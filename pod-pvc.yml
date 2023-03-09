@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: httpd
+  labels:
+    type: webserver
+spec:
+  containers:
+    - name: myhttpd
+      image: httpd
+      ports:
+        - containerPort: 80
+      volumeMounts:
+        - name: httpd-pvc
+          mountPath: /usr/share/httpd/html
+  volumes:
+    - name: httpd-pvc
+      persistentVolumeClaim:
+        claimName: mypvc

@@ -1,0 +1,30 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myjenkins
+  labels:
+    type: myjen
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      type: myjen
+  template:
+    metadata:
+      name: myjenkins
+      labels:
+        type: myjen
+    spec:
+      containers:
+        - name: myjenkins
+          image: jenkins/jenkins
+          ports:
+            - containerPort: 8080
+          resources:
+            requests:
+              cpu: "200m"
+              memory: "64Mi"
+            limits:
+              cpu: "500m"
+              memory: "120Mi"

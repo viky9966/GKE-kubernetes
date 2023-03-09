@@ -1,0 +1,18 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: httpd
+  labels:
+    type: webserver
+spec:
+  containers:
+    - name: myhttpd
+      image: httpd
+      ports:
+        - containerPort: 80
+  tolerations:
+    - key: run
+      operator: Equal
+      value: viky
+      effect: NoSchedule
