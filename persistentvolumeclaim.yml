@@ -4,9 +4,9 @@ kind: PersistentVolumeClaim
 metadata:
   name: mypvc
 spec:
-  storageClassName: manual
+  storageClassName: standard-rwm
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 2Gi

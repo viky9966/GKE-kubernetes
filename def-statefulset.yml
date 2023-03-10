@@ -1,0 +1,63 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: sql-pvc
+spec:
+  storageClassName: standard-rwm
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 3Gi
+  
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: sql
+spec:
+  replicas: 2
+  serviceName: mysql
+  selector:
+    matchLabels:
+      type: db
+  template:
+    metadata:
+      name: mysql
+      labels:
+        type: db
+    spec:
+      containers:
+        - name: mysql-db
+          image: mysql:5
+          ports:
+            - name: tcp
+              protocol: TCP
+              containerPort: 3306
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              value: viky123
+          volumeMounts:
+            - name: sql-volume
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: sql-volume
+          persistentVolumeClaim:
+            claimName: sql-pvc
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-service
+  labels:
+    type: mysql
+spec:
+  clusterIP: None
+  ports:
+    - name: tcp
+      protocol: TCP
+      port: 3306
+  selector:
+    type: db
